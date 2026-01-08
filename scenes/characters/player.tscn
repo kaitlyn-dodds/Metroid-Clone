@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://bu6ohf1j8xcl3"]
+
+[ext_resource type="Script" uid="uid://ddktmin8mectf" path="res://scripts/characters/player.gd" id="1_rp718"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wocps"]
+height = 52.0
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_rp718")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_wocps")
