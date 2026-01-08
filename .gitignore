@@ -1,0 +1,50 @@
+# Godot 4+ specific ignores
+.godot/
+# Godot 3 specific ignores (if applicable, remove for Godot 4-only projects)
+.import/
+export.cfg
+export_presets.cfg
+
+# Vim
+*.un~
+*.swo
+*.swp
+
+# Godot-specific files
+*.fsc
+*.fcf
+*.cst
+*.gdc
+*.gcw
+*.pck
+*.exe.meta
+*.exe.mono.meta
+
+# Mono/C# specific ignores
+.mono/
+[Cc]s/
+[Bb]in/
+[Oo]bj/
+*.csproj
+*.sln
+*.userprefs
+*.usr
+*.tmp
+*.asset
+*.apk
+*.aab
+*.js
+*.html
+*.wasm
+*.dSYM
+*.vcruntime
+*.pdb
+*.config
+*.dll
+*.tgz
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
