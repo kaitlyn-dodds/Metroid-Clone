@@ -1,19 +1,26 @@
-[gd_scene load_steps=3 format=3 uid="uid://ck5j4x8kk8ned"]
+[gd_scene load_steps=5 format=3 uid="uid://ck5j4x8kk8ned"]
 
+[ext_resource type="Script" uid="uid://cet38fah70v1s" path="res://scripts/levels/level_1.gd" id="1_6iamk"]
 [ext_resource type="PackedScene" uid="uid://bu6ohf1j8xcl3" path="res://scenes/characters/player.tscn" id="1_ksju7"]
+[ext_resource type="PackedScene" uid="uid://pidopnnw6for" path="res://scenes/static_bodies/bullet.tscn" id="3_nsrm0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7u6i3"]
 size = Vector2(1948.5, 607.75)
 
 [node name="Level1" type="Node2D"]
+script = ExtResource("1_6iamk")
+PlayerScene = ExtResource("1_ksju7")
+BulletScene = ExtResource("3_nsrm0")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="SpawnPoints" type="Node2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(370, 683)
+[node name="PlayerSpawnPoint" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(32, 369)
+
+[node name="FloorTemp" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FloorTemp"]
+position = Vector2(949, 687)
 shape = SubResource("RectangleShape2D_7u6i3")
 
-[node name="Characters" type="Node2D" parent="."]
-
-[node name="Player" parent="Characters" instance=ExtResource("1_ksju7")]
-position = Vector2(198, 344)
+[node name="SpawnedBullets" type="Node2D" parent="."]
