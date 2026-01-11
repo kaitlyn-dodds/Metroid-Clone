@@ -6,7 +6,23 @@ class_name Player
 @onready var reload_cooldown: Timer = $ReloadCooldown
 var can_fire: bool = true 
 
+# Animations
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var legs_sprite: Sprite2D = $LegsSprite
+@onready var torso_sprite: Sprite2D = $TorsoSprite
+
 signal fire_bullet(pos: Vector2, direction: Vector2)
+
+const torso_directions = {
+	Vector2i(1,0): 0,
+	Vector2i(1,1): 1,
+	Vector2i(0,1): 2,
+	Vector2i(-1,1): 3,
+	Vector2i(-1,0): 4,
+	Vector2i(-1,-1): 5,
+	Vector2i(0,-1): 6,
+	Vector2i(1,-1): 7
+}
 
 # Speed
 const SPEED = 12.0
@@ -28,6 +44,10 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	# vertical, horizontal movement
 	_handle_player_movement(delta)
+		
+	_legs_animation()
+	
+	_torso_animation()
 
 	# shooting mechanic
 	_handle_fire_input()
@@ -66,6 +86,32 @@ func _handle_horizontal_movement(delta: float) -> void:
 	else:
 		# slows the character down unti velocity reaches 0
 		velocity.x = move_toward(velocity.x, 0, DECELERATION * delta)
+	
+
+# ANIMATION #######################################################################################
+
+func _legs_animation() -> void: 
+	if is_on_floor():
+		if velocity == Vector2.ZERO:
+			animation_player.play("idle")
+		else:
+			animation_player.play("run_animation")
+			legs_sprite.flip_h = (velocity.x < 0)
+	elif not is_on_floor() and velocity != Vector2.ZERO:
+		print("jumping/falling")
+		animation_player.play("jump")
+		legs_sprite.flip_h = (velocity.x < 0)
+		
+func _torso_animation() -> void:
+	var mouse_position: Vector2 = get_local_mouse_position().normalized()
+	var adjusted_dir: Vector2i = Vector2i(round(mouse_position.x), round(mouse_position.y))
+	
+	# set torso frame
+	if adjusted_dir in torso_directions:
+		torso_sprite.frame = torso_directions[adjusted_dir]
+	else:
+		print("ERROR: no torso_direction found for adjusted direction ", adjusted_dir)
+
 
 # SHOOTING ########################################################################################
 
