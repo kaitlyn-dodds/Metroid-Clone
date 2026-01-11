@@ -13,5 +13,5 @@ script = ExtResource("1_cvwfm")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_cvwfm")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="BulletSprite" type="Sprite2D" parent="."]
 texture = ExtResource("1_qait6")

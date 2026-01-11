@@ -10,6 +10,7 @@ var can_fire: bool = true
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var legs_sprite: Sprite2D = $LegsSprite
 @onready var torso_sprite: Sprite2D = $TorsoSprite
+@onready var marker: Sprite2D = $Marker
 
 signal fire_bullet(pos: Vector2, direction: Vector2)
 
@@ -44,9 +45,10 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	# vertical, horizontal movement
 	_handle_player_movement(delta)
+	_marker_movement()
 		
+	# Animations
 	_legs_animation()
-	
 	_torso_animation()
 
 	# shooting mechanic
@@ -87,6 +89,10 @@ func _handle_horizontal_movement(delta: float) -> void:
 		# slows the character down unti velocity reaches 0
 		velocity.x = move_toward(velocity.x, 0, DECELERATION * delta)
 	
+func _marker_movement() -> void:
+	# should follow players mouse
+	var mouse_position: Vector2 = get_local_mouse_position().normalized()
+	marker.position = mouse_position * 40
 
 # ANIMATION #######################################################################################
 
@@ -112,6 +118,10 @@ func _torso_animation() -> void:
 	else:
 		print("ERROR: no torso_direction found for adjusted direction ", adjusted_dir)
 
+func _marker_animation() -> void:
+	var tween = get_tree().create_tween()
+	tween.tween_property(marker, "scale", Vector2(0.1, 0.1), 0.2)
+	tween.tween_property(marker, "scale", Vector2(0.5, 0.5), 0.4)
 
 # SHOOTING ########################################################################################
 
@@ -126,6 +136,9 @@ func _handle_fire_input() -> void:
 	if Input.is_action_just_pressed("fire") and can_fire:
 		# Fire bullet
 		fire_bullet.emit(position, get_local_mouse_position().normalized())
+		
+		# Animate marker
+		_marker_animation()
 		
 		# start cooldown
 		_start_reload_cooldown()
