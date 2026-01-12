@@ -7,23 +7,6 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wocps"]
 height = 28.0
 
-[sub_resource type="Animation" id="Animation_76oj4"]
-resource_name = "run_animation"
-length = 1.4
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("LegsSprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.19679733, 0.39896184, 0.6011264, 0.80508, 1.0000882, 1.2040418),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [9, 10, 11, 12, 13, 14, 15]
-}
-
 [sub_resource type="Animation" id="Animation_dyp2m"]
 length = 0.001
 tracks/0/type = "value"
@@ -71,6 +54,23 @@ tracks/0/keys = {
 "values": [17]
 }
 
+[sub_resource type="Animation" id="Animation_76oj4"]
+resource_name = "run_animation"
+length = 1.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LegsSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.19679733, 0.39896184, 0.6011264, 0.80508, 1.0000882, 1.2040418),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [9, 10, 11, 12, 13, 14, 15]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_atpat"]
 _data = {
 &"RESET": SubResource("Animation_dyp2m"),
@@ -80,6 +80,8 @@ _data = {
 }
 
 [node name="Player" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 5
 script = ExtResource("1_rp718")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
