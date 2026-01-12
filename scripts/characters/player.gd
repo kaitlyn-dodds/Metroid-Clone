@@ -39,6 +39,9 @@ const MAX_FALL_SPEED = 500.0
 const JUMP_GRAVITY = Vector2(0, 1200.0)
 const FALL_GRAVITY_MODIFIER = 2.0
 
+# Health
+var health: float = 60.0
+
 func _ready() -> void:
 	reload_cooldown.timeout.connect(_on_reload_cooldown_timeout)
 
@@ -141,6 +144,15 @@ func _handle_fire_input() -> void:
 		
 		# start cooldown
 		_start_reload_cooldown()
+
+# Health Management ###############################################################################
+
+func inflict_damage(damage: float) -> void:
+	health -= damage
+	print("ouch")
+	
+	if health <= 0:
+		print("I am dead, game over")
 		
 # HELPERS #########################################################################################
 

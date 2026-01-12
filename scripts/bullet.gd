@@ -1,9 +1,13 @@
-extends StaticBody2D
+extends Area2D
+
+class_name Bullet
 
 @export var speed: float = 500.0
 var direction: Vector2
 
 @onready var bullet_sprite: Sprite2D = $BulletSprite
+
+const DAMAGE = 10.0
 
 func initialize(pos: Vector2, dir: Vector2) -> void:
 	direction = dir

@@ -6,7 +6,8 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_cvwfm"]
 radius = 2.0
 
-[node name="Bullet" type="StaticBody2D"]
+[node name="Bullet" type="Area2D" groups=["bullet"]]
+z_index = 1
 collision_layer = 8
 collision_mask = 5
 script = ExtResource("1_cvwfm")
