@@ -104,7 +104,6 @@ func _legs_animation() -> void:
 			animation_player.play("run_animation")
 			legs_sprite.flip_h = (velocity.x < 0)
 	elif not is_on_floor() and velocity != Vector2.ZERO:
-		print("jumping/falling")
 		animation_player.play("jump")
 		legs_sprite.flip_h = (velocity.x < 0)
 		
