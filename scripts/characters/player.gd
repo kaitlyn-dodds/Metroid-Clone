@@ -149,10 +149,9 @@ func _handle_fire_input() -> void:
 
 func inflict_damage(damage: float) -> void:
 	health -= damage
-	print("ouch")
 	
 	if health <= 0:
-		print("I am dead, game over")
+		print("PLayer: I am dead, game over")
 		
 # HELPERS #########################################################################################
 
