@@ -13,11 +13,12 @@ const EXPLODE_DAMAGE: float = 20.0
 var is_alive: bool = true
 
 # Movement
-const SPEED = 30
+const SPEED = 3000
 
 # Target
 var target: Player = null
 const EXPLODE_RADIUS = 40.0
+const WARN_RADIUS: float = 100.0
 
 func _ready() -> void:
 	is_alive = true
@@ -29,13 +30,21 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if target and is_alive:
+		# play warning "blinking" animation if getting close to player
+		if global_position.distance_to(target.position) <= WARN_RADIUS:
+			animation_player.play("blinking")
+		
+		# stop warning if player is far enough away
+		if global_position.distance_to(target.position) > WARN_RADIUS:
+			animation_player.play("idle")
+		
 		# explode if close enough to cause damage
 		if global_position.distance_to(target.position) <= EXPLODE_RADIUS:
 			_explode()
 			
 		# move toward target
 		var direction = global_position.direction_to(target.position)
-		velocity = direction * SPEED
+		velocity = direction * SPEED * delta
 	else:
 		# stop moving 
 		velocity = Vector2.ZERO
