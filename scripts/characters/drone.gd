@@ -95,18 +95,19 @@ func _explode() -> void:
 	if target and global_position.distance_to(target.position) <= EXPLODE_RADIUS:
 		# inflict damage
 		target.inflict_damage(EXPLODE_DAMAGE)
-	
-	for drone in drones:
-		if global_position.distance_to(drone.position) <= EXPLODE_RADIUS and drone:
-			drone.inflict_damage(EXPLODE_DAMAGE)
-			drones.erase(drone)
-	
+		
 	# play death animation
 	animation_player.play("explode")
 	
 	# wait for the death animation to play
 	await animation_player.animation_finished
 	queue_free()
+
+func chain_reaction():
+	for drone in drones:
+		if global_position.distance_to(drone.position) <= EXPLODE_RADIUS and drone:
+			drone.inflict_damage(EXPLODE_DAMAGE)
+			drones.erase(drone)
 
 func inflict_damage(damage: float) -> void:
 	health -= damage
