@@ -5,6 +5,7 @@ class_name Drone
 # Animation
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @export var flash_decay_speed := 4.0
+@onready var audio_player: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 # Area2D nodes
 @onready var drone_body_area: Area2D = $DroneBodyArea
@@ -15,6 +16,7 @@ class_name Drone
 @export var health: float = 30.0
 const EXPLODE_DAMAGE: float = 30.0
 var is_alive: bool = true
+var is_exploding: bool = false
 
 # Movement
 const SPEED = 3000
@@ -104,11 +106,14 @@ func _explode() -> void:
 		target.inflict_damage(EXPLODE_DAMAGE)
 		
 	# play death animation
-	animation_player.play("explode")
+	if not is_exploding:
+		is_exploding = true
+		audio_player.play()
+		animation_player.play("explode")
 	
-	# wait for the death animation to play
-	await animation_player.animation_finished
-	queue_free()
+		# wait for the death animation to play
+		await animation_player.animation_finished
+		queue_free()
 
 func chain_reaction():
 	for drone in drones:
@@ -117,7 +122,6 @@ func chain_reaction():
 			drones.erase(drone)
 
 func inflict_damage(damage: float) -> void:
-	print("hit!")
 	health -= damage
 	
 	# flash the sprite when hit
@@ -131,5 +135,10 @@ func flash():
 
 func _manage_flash_decay(delta: float):
 	var current_strength: float = sprite_2d.material.get_shader_parameter("flash_strength")
+	
+	if current_strength == 0.0:
+		# nothing to do
+		return
+	
 	var decayed_strength = max(current_strength - flash_decay_speed * delta, 0.0)
 	sprite_2d.material.set_shader_parameter("flash_strength", decayed_strength)

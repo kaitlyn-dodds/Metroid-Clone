@@ -6,6 +6,7 @@ class_name Bullet
 var direction: Vector2
 
 @onready var bullet_sprite: Sprite2D = $BulletSprite
+@onready var audio_player: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 const DAMAGE = 10.0
 
@@ -20,6 +21,8 @@ func _ready() -> void:
 	var tween = get_tree().create_tween()
 	tween.tween_property(bullet_sprite, "scale", Vector2.ONE, 0.2).from(Vector2.ZERO)
 
+	# play sound effect
+	audio_player.play()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:

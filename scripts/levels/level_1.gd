@@ -19,5 +19,4 @@ func _on_player_fire_bullet(pos: Vector2, direction: Vector2) -> void:
 	# spawn bullet at provided position
 	var bullet := BulletScene.instantiate()
 	bullet.initialize(pos, direction)
-	print("firing!")
 	spawned_bullets.add_child(bullet)
