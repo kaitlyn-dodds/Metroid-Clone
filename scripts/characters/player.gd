@@ -152,6 +152,7 @@ func inflict_damage(damage: float) -> void:
 	
 	if health <= 0:
 		print("PLayer: I am dead, game over")
+		queue_free()
 		
 # HELPERS #########################################################################################
 

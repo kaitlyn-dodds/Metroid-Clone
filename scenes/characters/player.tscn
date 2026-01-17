@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://bu6ohf1j8xcl3"]
+[gd_scene load_steps=11 format=3 uid="uid://bu6ohf1j8xcl3"]
 
 [ext_resource type="Script" uid="uid://ddktmin8mectf" path="res://scripts/characters/player.gd" id="1_rp718"]
 [ext_resource type="Texture2D" uid="uid://de5wf7al0hknv" path="res://assets/graphics/characters/player.png" id="2_yewv4"]
 [ext_resource type="Texture2D" uid="uid://otyoj5px7yk7" path="res://assets/graphics/ui/crosshair.png" id="3_76oj4"]
+[ext_resource type="Texture2D" uid="uid://dijla4pisrrw8" path="res://assets/graphics/lights/main.png" id="4_dyp2m"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wocps"]
 height = 28.0
@@ -119,3 +120,8 @@ autoplay = "idle"
 [node name="Marker" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("3_76oj4")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+color = Color(0.9268064, 0.9268064, 0.92680633, 1)
+texture = ExtResource("4_dyp2m")
+texture_scale = 0.8

@@ -24,3 +24,10 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
 	position += direction * speed * delta
+
+func despawn():
+	queue_free()
+
+func _on_body_entered(body: Node2D) -> void:
+	# despawn bullet if it collides w/ terrain
+	despawn()

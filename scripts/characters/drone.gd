@@ -4,10 +4,12 @@ class_name Drone
 
 # Animation
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@export var flash_decay_speed := 4.0
 
 # Area2D nodes
 @onready var drone_body_area: Area2D = $DroneBodyArea
 @onready var detection_area: Area2D = $DetectionArea
+@onready var sprite_2d: Sprite2D = $Sprite2D
 
 # Health / Damage
 @export var health: float = 30.0
@@ -54,6 +56,8 @@ func _physics_process(delta: float) -> void:
 		# stop moving 
 		velocity = Vector2.ZERO
 		
+	_manage_flash_decay(delta)
+	
 	# check if drone should die (explode)
 	if not is_alive:
 		_explode()
@@ -72,6 +76,9 @@ func _on_drone_body_area_entered(area: Area2D) -> void:
 		
 		# apply damage
 		inflict_damage(bullet.DAMAGE)
+		
+		# despawn bullet
+		bullet.despawn()
 
 func _on_player_detection_area_entered(body: Node2D) -> void:
 	if body == self:
@@ -110,7 +117,19 @@ func chain_reaction():
 			drones.erase(drone)
 
 func inflict_damage(damage: float) -> void:
+	print("hit!")
 	health -= damage
+	
+	# flash the sprite when hit
+	flash()
 	
 	if health <= 0:
 		is_alive = false
+		
+func flash():
+	sprite_2d.material.set_shader_parameter("flash_strength", 1.0)
+
+func _manage_flash_decay(delta: float):
+	var current_strength: float = sprite_2d.material.get_shader_parameter("flash_strength")
+	var decayed_strength = max(current_strength - flash_decay_speed * delta, 0.0)
+	sprite_2d.material.set_shader_parameter("flash_strength", decayed_strength)
