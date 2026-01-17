@@ -101,7 +101,7 @@ func _on_player_detection_area_exited(body: Node2D) -> void:
 
 func _explode() -> void:
 	# damage player if in radius
-	if target and global_position.distance_to(target.position) <= EXPLODE_RADIUS:
+	if target and global_position.distance_to(target.position) <= EXPLODE_RADIUS and not is_exploding:
 		# inflict damage
 		target.inflict_damage(EXPLODE_DAMAGE)
 		
