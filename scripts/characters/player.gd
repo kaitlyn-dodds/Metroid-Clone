@@ -15,6 +15,7 @@ var can_fire: bool = true
 var can_move: bool = true
 
 signal fire_bullet(pos: Vector2, direction: Vector2)
+signal player_death
 
 const torso_directions = {
 	Vector2i(1,0): 0,
@@ -46,7 +47,9 @@ var health: float = 60.0
 
 func _ready() -> void:
 	can_move = true
+	
 	reload_cooldown.timeout.connect(_on_reload_cooldown_timeout)
+	player_death.connect(GameManager.on_player_death)
 
 func _physics_process(delta: float) -> void:
 	# vertical, horizontal movement
@@ -157,7 +160,8 @@ func inflict_damage(damage: float) -> void:
 	if health <= 0:
 		# set global player dead
 		can_move = false
-		global.player_is_alive = false
+		GameManager.player_is_alive = false
+		emit_signal("player_death")
 		
 # HELPERS #########################################################################################
 

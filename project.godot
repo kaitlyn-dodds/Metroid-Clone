@@ -17,7 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-global="*res://scripts/global.gd"
+GameManager="*res://scripts/game_manager.gd"
 
 [display]
 

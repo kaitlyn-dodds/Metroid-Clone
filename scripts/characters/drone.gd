@@ -29,6 +29,10 @@ const WARN_RADIUS: float = 100.0
 # Drones in proximity
 var drones: Array[Drone] = []
 
+# Signals
+signal death_started
+signal death_finished
+
 func _ready() -> void:
 	is_alive = true
 	
@@ -36,6 +40,8 @@ func _ready() -> void:
 	
 	detection_area.body_entered.connect(_on_player_detection_area_entered)
 	detection_area.body_exited.connect(_on_player_detection_area_exited)
+	death_started.connect(GameManager.on_drone_death_started)
+	death_finished.connect(GameManager.on_drone_death_finished)
 
 func _physics_process(delta: float) -> void:
 	if target and is_alive:
@@ -59,9 +65,6 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector2.ZERO
 		
 	_manage_flash_decay(delta)
-	
-	#print("Playing:", animation_player.current_animation, animation_player.current_animation_position)
-
 	
 	# check if drone should die (explode)
 	if not is_alive:
@@ -107,7 +110,8 @@ func _explode() -> void:
 	
 	if is_exploding:
 		return
-		
+	
+	emit_signal("death_started")
 	is_exploding = true
 	
 	# damage player if in radius
@@ -122,14 +126,14 @@ func _explode() -> void:
 	# wait for the death animation to play
 	var animation: String = await animation_player.animation_finished
 	if animation == "explode":
+		emit_signal("death_finished")
 		queue_free()
 
 func chain_reaction():
-	return
-	#for drone in drones:
-		#if global_position.distance_to(drone.position) <= EXPLODE_RADIUS and drone:
-			#drone.inflict_damage(EXPLODE_DAMAGE)
-			#drones.erase(drone)
+	for drone in drones:
+		if global_position.distance_to(drone.position) <= EXPLODE_RADIUS and drone:
+			drone.inflict_damage(EXPLODE_DAMAGE)
+			drones.erase(drone)
 
 func inflict_damage(damage: float) -> void:
 	health -= damage
