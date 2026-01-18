@@ -125,3 +125,29 @@ texture = ExtResource("3_76oj4")
 color = Color(0.9268064, 0.9268064, 0.92680633, 1)
 texture = ExtResource("4_dyp2m")
 texture_scale = 0.8
+
+[node name="BulletSpawnPoints" type="Node2D" parent="."]
+
+[node name="Point0" type="Marker2D" parent="BulletSpawnPoints"]
+position = Vector2(13, -5)
+
+[node name="Point1" type="Marker2D" parent="BulletSpawnPoints"]
+position = Vector2(7, 2)
+
+[node name="Point2" type="Marker2D" parent="BulletSpawnPoints"]
+position = Vector2(1, 6)
+
+[node name="Point3" type="Marker2D" parent="BulletSpawnPoints"]
+position = Vector2(-8, 2)
+
+[node name="Point4" type="Marker2D" parent="BulletSpawnPoints"]
+position = Vector2(-13, -5)
+
+[node name="Point5" type="Marker2D" parent="BulletSpawnPoints"]
+position = Vector2(-10, -14)
+
+[node name="Point6" type="Marker2D" parent="BulletSpawnPoints"]
+position = Vector2(0, -21)
+
+[node name="Point7" type="Marker2D" parent="BulletSpawnPoints"]
+position = Vector2(9, -14)

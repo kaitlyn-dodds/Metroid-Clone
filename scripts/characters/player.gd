@@ -17,16 +17,41 @@ var can_move: bool = true
 signal fire_bullet(pos: Vector2, direction: Vector2)
 signal player_death
 
-const torso_directions = {
-	Vector2i(1,0): 0,
-	Vector2i(1,1): 1,
-	Vector2i(0,1): 2,
-	Vector2i(-1,1): 3,
-	Vector2i(-1,0): 4,
-	Vector2i(-1,-1): 5,
-	Vector2i(0,-1): 6,
-	Vector2i(1,-1): 7
+@onready var torso_directions = {
+	Vector2i(1,0): {
+		"frame": 0,
+		"bullet_spawn_point": $BulletSpawnPoints/Point0
+	},
+	Vector2i(1,1): {
+		"frame": 1,
+		"bullet_spawn_point": $BulletSpawnPoints/Point1
+	},
+	Vector2i(0,1): {
+		"frame": 2,
+		"bullet_spawn_point": $BulletSpawnPoints/Point2
+	},
+	Vector2i(-1,1): {
+		"frame": 3,
+		"bullet_spawn_point": $BulletSpawnPoints/Point3
+	},
+	Vector2i(-1,0): {
+		"frame": 4,
+		"bullet_spawn_point": $BulletSpawnPoints/Point4
+	},
+	Vector2i(-1,-1): {
+		"frame": 5,
+		"bullet_spawn_point": $BulletSpawnPoints/Point5
+	},
+	Vector2i(0,-1): {
+		"frame": 6,
+		"bullet_spawn_point": $BulletSpawnPoints/Point6
+	},
+	Vector2i(1,-1): {
+		"frame": 7,
+		"bullet_spawn_point": $BulletSpawnPoints/Point7
+	}
 }
+var curr_torso_direction := Vector2i(1,0)
 
 # Speed
 const SPEED = 12.0
@@ -123,7 +148,8 @@ func _torso_animation() -> void:
 	
 	# set torso frame
 	if adjusted_dir in torso_directions:
-		torso_sprite.frame = torso_directions[adjusted_dir]
+		curr_torso_direction = adjusted_dir
+		torso_sprite.frame = torso_directions[adjusted_dir].frame
 	else:
 		print("ERROR: no torso_direction found for adjusted direction ", adjusted_dir)
 
@@ -144,7 +170,11 @@ func _start_reload_cooldown() -> void:
 func _handle_fire_input() -> void:
 	if Input.is_action_just_pressed("fire") and can_fire:
 		# Fire bullet
-		fire_bullet.emit(position, get_local_mouse_position().normalized())
+		if curr_torso_direction in torso_directions:
+			var spawn_marker: Marker2D = torso_directions[curr_torso_direction].bullet_spawn_point
+			fire_bullet.emit(spawn_marker.global_position, get_local_mouse_position().normalized())
+		else:
+			print("ERROR: Nowhere to spawn bullet")
 		
 		# Animate marker
 		_marker_animation()
