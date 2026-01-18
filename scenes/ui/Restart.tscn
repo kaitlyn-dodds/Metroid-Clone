@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cehlygy82mrg"]
 
-[ext_resource type="Script" uid="uid://dcd86nv0jxsk" path="res://scenes/ui/restart.gd" id="1_py4q6"]
+[ext_resource type="Script" uid="uid://dcd86nv0jxsk" path="res://scripts/ui/restart.gd" id="1_uwybq"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_honm7"]
 font_size = 60
@@ -15,7 +15,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_py4q6")
+script = ExtResource("1_uwybq")
 
 [node name="Background" type="ColorRect" parent="."]
 layout_mode = 1

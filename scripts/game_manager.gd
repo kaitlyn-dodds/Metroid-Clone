@@ -8,7 +8,7 @@ var death_counter: int = 0
 
 # Packed Scenes
 @onready var level_1_scene := preload("res://scenes/levels/level_1.tscn")
-@onready var restart_scene := preload("res://scenes/ui/Restart.tscn")
+@onready var restart_scene := preload("res://scenes/ui/restart.tscn")
 
 func _ready() -> void:
 	pass
