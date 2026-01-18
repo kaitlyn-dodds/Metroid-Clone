@@ -13,9 +13,7 @@ extends Node2D
 
 func _ready() -> void:
 	_spawn_player()
-	
 	_spawn_drones()
-	
 
 func _on_player_fire_bullet(pos: Vector2, direction: Vector2) -> void:
 	# spawn bullet at provided position

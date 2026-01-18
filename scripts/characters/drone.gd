@@ -14,7 +14,7 @@ class_name Drone
 
 # Health / Damage
 @export var health: float = 30.0
-const EXPLODE_DAMAGE: float = 30.0
+const EXPLODE_DAMAGE: float = 60.0
 var is_alive: bool = true
 var is_exploding: bool = false
 
@@ -60,6 +60,9 @@ func _physics_process(delta: float) -> void:
 		
 	_manage_flash_decay(delta)
 	
+	#print("Playing:", animation_player.current_animation, animation_player.current_animation_position)
+
+	
 	# check if drone should die (explode)
 	if not is_alive:
 		_explode()
@@ -100,26 +103,33 @@ func _on_player_detection_area_exited(body: Node2D) -> void:
 		drones.erase(body)
 
 func _explode() -> void:
+	is_alive = false
+	
+	if is_exploding:
+		return
+		
+	is_exploding = true
+	
 	# damage player if in radius
-	if target and global_position.distance_to(target.position) <= EXPLODE_RADIUS and not is_exploding:
+	if target and global_position.distance_to(target.position) <= EXPLODE_RADIUS:
 		# inflict damage
 		target.inflict_damage(EXPLODE_DAMAGE)
 		
 	# play death animation
-	if not is_exploding:
-		is_exploding = true
-		audio_player.play()
-		animation_player.play("explode")
-	
-		# wait for the death animation to play
-		await animation_player.animation_finished
+	audio_player.play()
+	animation_player.play("explode")
+
+	# wait for the death animation to play
+	var animation: String = await animation_player.animation_finished
+	if animation == "explode":
 		queue_free()
 
 func chain_reaction():
-	for drone in drones:
-		if global_position.distance_to(drone.position) <= EXPLODE_RADIUS and drone:
-			drone.inflict_damage(EXPLODE_DAMAGE)
-			drones.erase(drone)
+	return
+	#for drone in drones:
+		#if global_position.distance_to(drone.position) <= EXPLODE_RADIUS and drone:
+			#drone.inflict_damage(EXPLODE_DAMAGE)
+			#drones.erase(drone)
 
 func inflict_damage(damage: float) -> void:
 	health -= damage

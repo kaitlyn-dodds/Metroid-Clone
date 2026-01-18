@@ -12,6 +12,8 @@ var can_fire: bool = true
 @onready var torso_sprite: Sprite2D = $TorsoSprite
 @onready var marker: Sprite2D = $Marker
 
+var can_move: bool = true
+
 signal fire_bullet(pos: Vector2, direction: Vector2)
 
 const torso_directions = {
@@ -43,19 +45,21 @@ const FALL_GRAVITY_MODIFIER = 2.0
 var health: float = 60.0
 
 func _ready() -> void:
+	can_move = true
 	reload_cooldown.timeout.connect(_on_reload_cooldown_timeout)
 
 func _physics_process(delta: float) -> void:
 	# vertical, horizontal movement
-	_handle_player_movement(delta)
-	_marker_movement()
-		
-	# Animations
-	_legs_animation()
-	_torso_animation()
+	if can_move:
+		_handle_player_movement(delta)
+		_marker_movement()
+			
+		# Animations
+		_legs_animation()
+		_torso_animation()
 
-	# shooting mechanic
-	_handle_fire_input()
+		# shooting mechanic
+		_handle_fire_input()
 
 	move_and_slide()
 
@@ -68,7 +72,7 @@ func _handle_player_movement(delta: float) -> void:
 func _handle_gravity(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
-		if Input.is_action_pressed("jump"):
+		if Input.is_action_pressed("space"):
 			velocity += JUMP_GRAVITY * delta
 		else:
 			var increment_y: float = (JUMP_GRAVITY * FALL_GRAVITY_MODIFIER * delta).y
@@ -78,7 +82,7 @@ func _handle_gravity(delta: float) -> void:
 func _handle_vertical_movement(delta: float) -> void:
 	_handle_gravity(delta)
 		
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	if Input.is_action_just_pressed("space") and is_on_floor():
 		velocity.y = _JUMP() * delta
 
 func _handle_horizontal_movement(delta: float) -> void:
@@ -151,8 +155,9 @@ func inflict_damage(damage: float) -> void:
 	health -= damage
 	
 	if health <= 0:
-		print("PLayer: I am dead, game over")
-		queue_free()
+		# set global player dead
+		can_move = false
+		global.player_is_alive = false
 		
 # HELPERS #########################################################################################
 
