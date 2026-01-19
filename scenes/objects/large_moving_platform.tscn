@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://xh0hf2h1sqm5"]
+
+[ext_resource type="PackedScene" uid="uid://c6b75m4kr4xjq" path="res://scenes/objects/moving_platform_base.tscn" id="1_weay0"]
+[ext_resource type="Texture2D" uid="uid://dooxf3vwfhc1u" path="res://assets/graphics/objects/large platform.png" id="2_m5def"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xgkc2"]
+size = Vector2(104, 16)
+
+[node name="LargeMovingPlatform" instance=ExtResource("1_weay0")]
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_m5def")
+
+[node name="CollisionShape2D" parent="." index="1"]
+shape = SubResource("RectangleShape2D_xgkc2")

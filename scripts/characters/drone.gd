@@ -2,6 +2,8 @@ extends CharacterBody2D
 
 class_name Drone
 
+@export var ignore_player: bool = false
+
 # Animation
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @export var flash_decay_speed := 4.0
@@ -93,7 +95,7 @@ func _on_drone_body_area_entered(area: Area2D) -> void:
 func _on_player_detection_area_entered(body: Node2D) -> void:
 	if body == self:
 		return
-	elif body.is_in_group("player"):
+	elif body.is_in_group("player") and not ignore_player:
 		target = body
 		_turn_on_light()
 	elif body.is_in_group("drone"):

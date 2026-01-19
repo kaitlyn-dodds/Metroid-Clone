@@ -8,11 +8,13 @@ const SPEED = 30.0
 @export_range(-1, 1) var vertical_movement := -1 # negative number goes UP
 
 func _physics_process(delta: float) -> void:
-	if horizontal_movement != 0:
-		position.x += SPEED * delta * horizontal_movement
-	
-	if vertical_movement != 0:
-		position.y += SPEED * delta * vertical_movement
+	var movement := Vector2(
+		horizontal_movement,
+		vertical_movement
+	)
+
+	if movement != Vector2.ZERO:
+		position += movement.normalized() * SPEED * delta
 	
 func stop_horizontal_movement():
 	horizontal_movement = 0

@@ -1,10 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://c6b75m4kr4xjq"]
+[gd_scene load_steps=3 format=3 uid="uid://c6b75m4kr4xjq"]
 
-[ext_resource type="Texture2D" uid="uid://cusi5yj6emo7g" path="res://assets/graphics/objects/small platform.png" id="1_gfj5l"]
 [ext_resource type="Script" uid="uid://dc7lty0h2gluk" path="res://scripts/objects/moving_platform.gd" id="1_ll65p"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_marny"]
-size = Vector2(48, 16)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gfj5l"]
 
 [node name="MovingPlatform" type="AnimatableBody2D" groups=["platform"]]
 collision_layer = 16
@@ -13,7 +11,6 @@ script = ExtResource("1_ll65p")
 vertical_movement = 0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_gfj5l")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_marny")
+shape = SubResource("RectangleShape2D_gfj5l")
