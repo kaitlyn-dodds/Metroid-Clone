@@ -3856,6 +3856,15 @@ position = Vector2(759, 528)
 [node name="DroneSpawnPoint12" type="Marker2D" parent="SpawnPoints/DroneSpawnPoints"]
 position = Vector2(579, 527)
 
+[node name="DroneSpawnPoint13" type="Marker2D" parent="SpawnPoints/DroneSpawnPoints"]
+position = Vector2(56, 958)
+
+[node name="DroneSpawnPoint14" type="Marker2D" parent="SpawnPoints/DroneSpawnPoints"]
+position = Vector2(583, 951)
+
+[node name="DroneSpawnPoint15" type="Marker2D" parent="SpawnPoints/DroneSpawnPoints"]
+position = Vector2(1123, 612)
+
 [node name="SpawnedBullets" type="Node2D" parent="."]
 
 [node name="Layers" type="Node2D" parent="."]
@@ -3933,42 +3942,46 @@ position = Vector2(32, 440)
 color = Color(0.6745098, 1, 0.2509804, 1)
 texture = ExtResource("8_dga24")
 
-[node name="PlatformControlAreas" type="Node2D" parent="."]
+[node name="PlatformControlAreasGroup1" type="Node2D" parent="."]
 
-[node name="PlatformControlArea" parent="PlatformControlAreas" instance=ExtResource("10_qxy0u")]
+[node name="PlatformControlArea" parent="PlatformControlAreasGroup1" instance=ExtResource("10_qxy0u")]
 position = Vector2(498, 145.00002)
 scale = Vector2(0.105, 2.28)
 stop_horizontal_movement = true
 send_platform_down = true
 
-[node name="PlatformControlArea2" parent="PlatformControlAreas" instance=ExtResource("10_qxy0u")]
+[node name="PlatformControlArea2" parent="PlatformControlAreasGroup1" instance=ExtResource("10_qxy0u")]
 position = Vector2(472, 456.99997)
 scale = Vector2(2.35, 0.07)
 stop_vertical_movement = true
 send_platform_left = true
 
-[node name="PlatformControlArea3" parent="PlatformControlAreas" instance=ExtResource("10_qxy0u")]
+[node name="PlatformControlArea3" parent="PlatformControlAreasGroup1" instance=ExtResource("10_qxy0u")]
 position = Vector2(321, 442.00003)
 scale = Vector2(0.11, 2.31)
 stop_horizontal_movement = true
 send_platform_up = true
 
-[node name="PlatformControlArea4" parent="PlatformControlAreas" instance=ExtResource("10_qxy0u")]
+[node name="PlatformControlArea4" parent="PlatformControlAreasGroup1" instance=ExtResource("10_qxy0u")]
 position = Vector2(336, 123)
 scale = Vector2(2.83, 0.16)
 stop_vertical_movement = true
 send_platform_right = true
 
-[node name="MovingPlatforms" type="Node2D" parent="."]
+[node name="MovingPlatformsGroup1" type="Node2D" parent="."]
 
-[node name="MovingPlatform" parent="MovingPlatforms" instance=ExtResource("9_dga24")]
+[node name="MovingPlatform" parent="MovingPlatformsGroup1" instance=ExtResource("9_dga24")]
 position = Vector2(348, 139)
 
-[node name="MovingPlatform2" parent="MovingPlatforms" instance=ExtResource("9_dga24")]
+[node name="MovingPlatform2" parent="MovingPlatformsGroup1" instance=ExtResource("9_dga24")]
 position = Vector2(472, 263)
 horizontal_movement = 0
 vertical_movement = 1
 
-[node name="MovingPlatform3" parent="MovingPlatforms" instance=ExtResource("9_dga24")]
+[node name="MovingPlatform3" parent="MovingPlatformsGroup1" instance=ExtResource("9_dga24")]
 position = Vector2(364, 448)
 horizontal_movement = -1
+
+[node name="MovingPlatformGroup2" type="Node2D" parent="."]
+
+[node name="PlatformControlAreasGroup2" type="Node2D" parent="."]
