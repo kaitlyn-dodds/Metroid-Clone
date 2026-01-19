@@ -6,6 +6,7 @@ class_name Drone
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @export var flash_decay_speed := 4.0
 @onready var audio_player: AudioStreamPlayer2D = $AudioStreamPlayer2D
+@onready var light: PointLight2D = $Light
 
 # Area2D nodes
 @onready var drone_body_area: Area2D = $DroneBodyArea
@@ -35,6 +36,7 @@ signal death_finished
 
 func _ready() -> void:
 	is_alive = true
+	light.energy = 0.0
 	
 	drone_body_area.area_entered.connect(_on_drone_body_area_entered)
 	
@@ -93,6 +95,7 @@ func _on_player_detection_area_entered(body: Node2D) -> void:
 		return
 	elif body.is_in_group("player"):
 		target = body
+		_turn_on_light()
 	elif body.is_in_group("drone"):
 		drones.append(body as Drone)
 		
@@ -143,6 +146,9 @@ func inflict_damage(damage: float) -> void:
 	
 	if health <= 0:
 		is_alive = false
+	
+func _turn_on_light():
+	light.energy = 1.0
 		
 func flash():
 	sprite_2d.material.set_shader_parameter("flash_strength", 1.0)
