@@ -70,7 +70,7 @@ const FALL_GRAVITY_MODIFIER = 2.0
 
 # Health
 var health: float = 60.0
-
+ 
 func _ready() -> void:
 	can_move = true
 	
