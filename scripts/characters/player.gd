@@ -11,6 +11,7 @@ var can_fire: bool = true
 @onready var legs_sprite: Sprite2D = $LegsSprite
 @onready var torso_sprite: Sprite2D = $TorsoSprite
 @onready var marker: Sprite2D = $Marker
+@export var flash_decay_speed := 4.0
 
 var can_move: bool = true
 
@@ -88,6 +89,8 @@ func _physics_process(delta: float) -> void:
 
 		# shooting mechanic
 		_handle_fire_input()
+		
+	_manage_flash_decay(delta)
 
 	move_and_slide()
 
@@ -158,6 +161,21 @@ func _marker_animation() -> void:
 	tween.tween_property(marker, "scale", Vector2(0.1, 0.1), 0.2)
 	tween.tween_property(marker, "scale", Vector2(0.5, 0.5), 0.4)
 
+func flash():
+	torso_sprite.material.set_shader_parameter("flash_strength", 1.0)
+	legs_sprite.material.set_shader_parameter("flash_strength", 1.0)
+	
+func _manage_flash_decay(delta: float):
+	var current_strength: float = torso_sprite.material.get_shader_parameter("flash_strength")
+	
+	if current_strength == 0.0:
+		# nothing to do
+		return
+	
+	var decayed_strength = max(current_strength - flash_decay_speed * delta, 0.0)
+	torso_sprite.material.set_shader_parameter("flash_strength", decayed_strength)
+	legs_sprite.material.set_shader_parameter("flash_strength", decayed_strength)
+
 # SHOOTING ########################################################################################
 
 func _on_reload_cooldown_timeout() -> void:
@@ -186,6 +204,8 @@ func _handle_fire_input() -> void:
 
 func inflict_damage(damage: float) -> void:
 	health -= damage
+	
+	flash()
 	
 	if health <= 0:
 		# set global player dead

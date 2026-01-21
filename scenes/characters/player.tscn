@@ -1,12 +1,21 @@
-[gd_scene load_steps=11 format=3 uid="uid://bu6ohf1j8xcl3"]
+[gd_scene load_steps=14 format=3 uid="uid://bu6ohf1j8xcl3"]
 
 [ext_resource type="Script" uid="uid://ddktmin8mectf" path="res://scripts/characters/player.gd" id="1_rp718"]
+[ext_resource type="Shader" uid="uid://64cmlogfm5ri" path="res://shaders/drone.gdshader" id="2_atpat"]
 [ext_resource type="Texture2D" uid="uid://de5wf7al0hknv" path="res://assets/graphics/characters/player.png" id="2_yewv4"]
 [ext_resource type="Texture2D" uid="uid://otyoj5px7yk7" path="res://assets/graphics/ui/crosshair.png" id="3_76oj4"]
 [ext_resource type="Texture2D" uid="uid://dijla4pisrrw8" path="res://assets/graphics/lights/main.png" id="4_dyp2m"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wocps"]
 height = 28.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kqtwu"]
+shader = ExtResource("2_atpat")
+shader_parameter/flash_strength = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_atpat"]
+shader = ExtResource("2_atpat")
+shader_parameter/flash_strength = 0.0
 
 [sub_resource type="Animation" id="Animation_dyp2m"]
 length = 0.001
@@ -99,6 +108,7 @@ limit_bottom = 1100
 wait_time = 0.5
 
 [node name="LegsSprite" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_kqtwu")
 position = Vector2(0, -7)
 texture = ExtResource("2_yewv4")
 hframes = 8
@@ -106,6 +116,7 @@ vframes = 3
 frame = 9
 
 [node name="TorsoSprite" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_atpat")
 position = Vector2(0, -8)
 texture = ExtResource("2_yewv4")
 hframes = 8
